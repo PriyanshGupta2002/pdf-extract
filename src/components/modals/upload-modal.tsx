@@ -13,12 +13,13 @@ import { File as FileIcon, Flag, Loader, X } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import axios from "axios";
-import { BASE_URL, FILE_UPLOAD_API } from "@/constants";
+import { BASE_URL, FILE_UPLOAD_API, PDF_PROCESSING_API } from "@/constants";
 import { useToast } from "../ui/use-toast";
 
 interface UploadModalProps {
   open: boolean;
   setOpen: (open: boolean) => void;
+  fetchPdfList: () => void;
 }
 
 interface fileType {
@@ -27,8 +28,20 @@ interface fileType {
   size: number;
 }
 
-const UploadModal: FC<UploadModalProps> = ({ open, setOpen }) => {
+interface fileUploadDataProps {
+  URL: string;
+  file_extension: string;
+  file_name: string;
+  file_path: string;
+  file_type: string;
+  message: string;
+  _id: string;
+}
+
+const UploadModal: FC<UploadModalProps> = ({ open, setOpen, fetchPdfList }) => {
   const [files, setFiles] = useState<fileType[]>([]);
+  let filesId: string[];
+  //   const [filesId, setFilesId] = useState<string[]>([]);
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const { toast } = useToast();
 
@@ -71,18 +84,30 @@ const UploadModal: FC<UploadModalProps> = ({ open, setOpen }) => {
 
     try {
       setIsUploading(true);
-      const response = await axios.post(FILE_UPLOAD_API, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
-
-      console.log("Upload successful", response.data);
+      const { data }: { data: fileUploadDataProps[] } = await axios.post(
+        FILE_UPLOAD_API,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      const fileId = data.map((item) => item._id);
+      filesId = fileId;
     } catch (error) {
       console.error("Upload failed", error);
     } finally {
       setIsUploading(false);
       setOpen(false);
+      setFiles([]);
+      toast({
+        title: "Pdf processing is started",
+      });
+      await fetchPdfList();
+      await axios.post(PDF_PROCESSING_API, {
+        file_ids: filesId,
+      });
     }
   };
 
