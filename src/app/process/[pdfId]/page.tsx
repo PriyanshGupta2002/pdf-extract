@@ -1,9 +1,10 @@
 "use client";
+import ImageRenderer from "@/components/process/image-render";
 import LeftPageBar from "@/components/process/left-page-bar";
 import PageInfo from "@/components/process/page-info";
 import { GET_PDF_PAGES, START_PDF_EXTRACTION } from "@/constants";
 import axios from "axios";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 
 export interface PdfPagesTypes {
@@ -16,6 +17,11 @@ export interface PdfPagesTypes {
 const Process = () => {
   const [pdfPages, setPdfPages] = useState<PdfPagesTypes[]>([]);
   const { pdfId } = useParams<{ pdfId: string }>();
+  const [pageNo, setPageNo] = useState<string>("");
+  const [isLeftBarOpen, setIsLeftBarOpen] = useState<boolean>(true);
+  const [imageByteString, setImageByteString] = useState<string>("");
+
+  const searchParams = useSearchParams();
 
   const fetchPdfPages = useCallback(async (id: string) => {
     try {
@@ -32,10 +38,39 @@ const Process = () => {
     }
   }, [fetchPdfPages, pdfId]);
 
+  useEffect(() => {
+    const params = new URLSearchParams(searchParams);
+    const page = params.get("page");
+    if (page) {
+      setPageNo(page);
+    }
+  }, [searchParams]);
+
   return (
     <div>
-      <LeftPageBar pdfPages={pdfPages} />
-      <PageInfo pdfId={pdfId as string} />
+      <LeftPageBar
+        pdfPages={pdfPages}
+        pageId={pageNo}
+        isOpen={isLeftBarOpen}
+        setOpen={setIsLeftBarOpen}
+        setImageByteString={setImageByteString}
+      />
+      <div className="flex">
+        <PageInfo
+          pdfId={pdfId}
+          pageId={pageNo}
+          isPageBarOpen={isLeftBarOpen}
+          imageByteString={imageByteString}
+          setImageByteString={setImageByteString}
+        />
+        {imageByteString && (
+          <ImageRenderer
+            byteString={imageByteString}
+            altText={"Image"}
+            setByteString={setImageByteString}
+          />
+        )}
+      </div>
     </div>
   );
 };

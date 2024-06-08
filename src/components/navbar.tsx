@@ -5,7 +5,7 @@ import React from "react";
 
 const Navbar = () => {
   return (
-    <div className="p-2 w-full bg-bgPrimary">
+    <div className="p-2 w-full bg-bgPrimary sticky top-0 z-30">
       <div className="flex items-center gap-2">
         <Menu
           className="text-sm text-sdzBlue100 cursor-pointer"

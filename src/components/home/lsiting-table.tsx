@@ -74,6 +74,7 @@ const ListingTable: FC<listingTableProps> = ({
 
   const { toast } = useToast();
 
+  console.log(statuses);
   const handleClick = useCallback(
     (id: string, status: string) => {
       if (status === "Pending" || status === "Processing") {

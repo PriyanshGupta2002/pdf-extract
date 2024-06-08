@@ -1,0 +1,121 @@
+{
+  "_id": "6663eb64e8e74cfba31b2cae",
+  "File_Name": "sample2 (1)_page_2.png",
+  "Project_Name": "Comprehensive screenings",
+  "Context": {
+    "Strategic objective": "Advanced risk & disease detection",
+    "Strategic Program": "Comprehensive screening program"
+  },
+  "Overview": {
+    "Type": "Program",
+    "Estimated timeline": "Jan 2024 – Dec 2024",
+    "Target group": "Abu Dhabi Community"
+  },
+  "Owner": {
+    "Program Sponsors": "H.E Dr. Omniyat Al Hajeri",
+    "Project Managers": ["Dr. Mariam al Wahedi", " Dr. Lamia Safieldein"]
+  },
+  "Stakeholders": [
+    "Healthcare providers (private & public)",
+    "Daman national insurance",
+    "Department of education and Knowledge",
+    "Group 42"
+  ],
+  "Status": "In Progress",
+
+  "List_of_Sub_Initiatives": ["Not Found"],
+  "Interdependencies": [
+    {
+      "External entity": "External Providers (SEHA, NMC, etc.)",
+      "Required support to implement the project": "Implementation of the project"
+    },
+    {
+      "External entity": "Payer's community",
+      "Required support to implement the project": "Reimbursement alignment"
+    },
+    {
+      "External entity": "Model of care committees",
+      "Required support to implement the project": "Integration into primary care and other modes of care; quality standardization and audit"
+    }
+  ],
+  "Risks_and_Mitigations": [
+    {
+      "Risk": "Lack of integration of results and screening outcome through Malaffi will lead to failure of giving program outcomes",
+      "Impact Level": "High"
+    },
+    {
+      "Risk": "Decisions from stakeholders may impact the direction of the program (e.g. whether to make the program compulsory for all Thqa members)",
+      "Impact Level": "High"
+    },
+    {
+      "Risk": "Willingness of screened individuals to follow through with treatment plans",
+      "Impact Level": "Medium"
+    }
+  ],
+  "Key_Performance_Indicators": [
+    {
+      "kpi_type": "Main KPI",
+      "data": [
+        {
+          "KPI": "Early detection of common cancers – Breast",
+          "Targets": {
+            "2024": "80.5%",
+            "2025": "83%",
+            "2026": "85.5%"
+          }
+        },
+        {
+          "KPI": "Early detection of common cancers – Colorectal",
+          "Targets": {
+            "2024": "44.5%",
+            "2025": "47%",
+            "2026": "49.5%"
+          }
+        },
+        {
+          "KPI": "Early detection of common cancers – Cervical",
+          "Targets": {
+            "2024": "68.5%",
+            "2025": "71%",
+            "2026": "73.5%"
+          }
+        },
+        {
+          "KPI": "Prevalence of adult obesity",
+          "Targets": {
+            "2024": "23.4%",
+            "2025": "21.4%",
+            "2026": "19.4%"
+          }
+        },
+        {
+          "KPI": "Prevalence of childhood obesity",
+          "Targets": {
+            "2024": "17.80%",
+            "2025": "16.8%",
+            "2026": "15.80%"
+          }
+        }
+      ]
+    },
+    {
+      "kpi_type": "Support KPI",
+      "data": [
+        {
+          "KPI": "% Establish screening coverage",
+          "Targets": {
+            "2024": "7%",
+            "2025": "7%",
+            "2026": "7%"
+          }
+        }
+      ]
+    }
+  ],
+
+  "Budget": "Not Present",
+  "Path": "Output Files\\sample2 (1)_page_2.png",
+  "DB_Id": "6663eae9e8e74cfba31b2c9a",
+  "Skip": false,
+  "Extracted": "Yes"
+}
