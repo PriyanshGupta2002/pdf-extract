@@ -2,21 +2,28 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 
-import { GET_PAGE_INFO, START_PDF_EXTRACTION } from "@/constants";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+import { GET_PAGE_INFO, START_PDF_EXTRACTION } from "@/lib/constants";
 import axios from "axios";
 import Image from "next/image";
 import React, { FC, useCallback, useEffect, useState } from "react";
 import Wrapper from "./wrapper";
 import { cn } from "@/lib/utils";
 import { Eye } from "lucide-react";
+import { Project } from "@/lib/types";
+import { Button } from "../ui/button";
 
 interface PageInfoProps {
   pdfId: string;
@@ -34,11 +41,12 @@ const PageInfo: FC<PageInfoProps> = ({
   imageByteString,
 }) => {
   const [isExtracting, setIsExtracting] = useState<boolean>(false);
-  const [pageInfo, setPageInfo] = useState<any>();
+  const [pageInfo, setPageInfo] = useState<Project>();
   const levels = {
     Medium: "#FAA160",
     Low: "#10C400",
     High: "#FF0000",
+    default: "gray", // Default color level
   };
 
   useEffect(() => {
@@ -72,7 +80,7 @@ const PageInfo: FC<PageInfoProps> = ({
     }
   }, [getPageInfo, isExtracting, pageId]);
 
-  console.log(pageInfo);
+  // console.log(pageInfo?.Context);
 
   return (
     <div
@@ -90,7 +98,9 @@ const PageInfo: FC<PageInfoProps> = ({
               <span>Project Extraction</span>
               {pageInfo?.Image_String && (
                 <Eye
-                  onClick={() => setImageByteString(pageInfo.Image_String)}
+                  onClick={() =>
+                    setImageByteString(pageInfo.Image_String || "")
+                  }
                   className="w-5 h-5 cursor-pointer text-darkBlack600"
                 />
               )}
@@ -103,10 +113,13 @@ const PageInfo: FC<PageInfoProps> = ({
             />
           </div>
 
-          <div className="font-bold text-base">{pageInfo?.Project_Name}</div>
+          <div className="font-bold flex items-center justify-between text-base">
+            <span>{pageInfo?.Project_Name}</span>
+            <span>Budget - {pageInfo?.Budget}</span>
+          </div>
           <div className="grid grid-cols-2 gap-3">
-            {pageInfo?.context && (
-              <Wrapper>
+            {pageInfo?.Context && (
+              <Wrapper className="max-h-[200px] overflow-y-auto">
                 <div className="flex items-center justify-between">
                   <span className="text-darkBlack700 text-sm font-bold">
                     Alignment
@@ -128,7 +141,7 @@ const PageInfo: FC<PageInfoProps> = ({
                 </div>
               </Wrapper>
             )}
-            <Wrapper>
+            <Wrapper className="max-h-[200px] overflow-y-auto">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-darkBlack700 font-bold text-sm">
                   Overview
@@ -147,7 +160,7 @@ const PageInfo: FC<PageInfoProps> = ({
                 )
               )}
             </Wrapper>
-            <Wrapper>
+            <Wrapper className="max-h-[200px] overflow-y-auto">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-darkBlack700 font-bold text-sm">
                   Owner
@@ -156,7 +169,7 @@ const PageInfo: FC<PageInfoProps> = ({
 
               <div
                 className={cn(
-                  "flex  justify-between",
+                  "flex  gap-8",
                   imageByteString ? "flex-col gap-5" : "flex-row"
                 )}
               >
@@ -174,7 +187,7 @@ const PageInfo: FC<PageInfoProps> = ({
                 )}
               </div>
             </Wrapper>
-            <Wrapper>
+            <Wrapper className="max-h-[200px] overflow-y-auto">
               <div className="flex items-center justify-between gap-2">
                 <span className="text-darkBlack700 font-bold text-sm">
                   Stakeholders
@@ -193,8 +206,50 @@ const PageInfo: FC<PageInfoProps> = ({
                 </div>
               )}
             </Wrapper>
+            <Wrapper
+              className={cn(
+                "max-h-[200px] overflow-y-auto",
+                imageByteString ? "col-span-2" : "col-span-1"
+              )}
+            >
+              <div className="flex justify-between items-center gap-2">
+                <span className="text-darkBlack700 font-bold text-sm">
+                  Initiative Details
+                </span>
+              </div>
+
+              <div className="flex flex-col space-y-2">
+                <div className="text-sm">
+                  {" "}
+                  <span className="text-darkBlack700 font-medium">
+                    {" "}
+                    Description -{" "}
+                  </span>
+                  <span className="text-darkBlack600 font-normal">
+                    {pageInfo?.Initiative_Details["Program description"]}
+                  </span>
+                </div>
+                <div className="flex flex-col gap-2 text-sm">
+                  <span className="text-darkBlack700 font-medium">
+                    Key Deliverables
+                  </span>
+                  {pageInfo?.Initiative_Details.Deliverables.map(
+                    (item, idx) => (
+                      <span key={idx} className="font-normal text-darkBlack600">
+                        {item}
+                      </span>
+                    )
+                  )}
+                </div>
+              </div>
+            </Wrapper>
             {pageInfo?.List_of_Sub_Initiatives && (
-              <Wrapper>
+              <Wrapper
+                className={cn(
+                  "max-h-[200px] overflow-y-auto",
+                  imageByteString ? "col-span-2" : "col-span-1"
+                )}
+              >
                 <div className="flex justify-between items-center gap-2">
                   <span className="text-darkBlack700 font-bold text-sm">
                     Sub Initiatives
@@ -214,7 +269,10 @@ const PageInfo: FC<PageInfoProps> = ({
             )}
             {pageInfo?.Interdependencies && (
               <Wrapper
-                className={cn(imageByteString ? "col-span-2" : "col-span-1")}
+                className={cn(
+                  "max-h-[200px] overflow-y-auto",
+                  imageByteString ? "col-span-2" : "col-span-1"
+                )}
               >
                 <div className="flex justify-between items-center gap-2">
                   <span className="text-darkBlack700 font-bold text-sm">
@@ -225,20 +283,90 @@ const PageInfo: FC<PageInfoProps> = ({
                   {pageInfo?.Interdependencies?.map((item, idx) => (
                     <div className="flex text-sm flex-col gap-1" key={idx}>
                       <span className="text-darkBlack700 font-medium">
-                        Entity - {item["External entity"]}
+                        Entity -{" "}
+                        {item["External Stakeholder" ?? "External Entity"]}
                       </span>
                       <span className="text-darkBlack700 font-normal pl-3">
                         Support -{" "}
-                        {item["Required support to implement the project"]}
+                        {
+                          item[
+                            "Required support to implement the program" ??
+                              "Required support to implement the initiative"
+                          ]
+                        }
                       </span>
                     </div>
                   ))}
                 </div>
               </Wrapper>
             )}
+
+            {pageInfo?.Key_Performance_Indicators && (
+              <Wrapper
+                className={cn(
+                  "max-h-[200px] overflow-y-auto",
+                  imageByteString ? "col-span-2" : "col-span-1"
+                )}
+              >
+                <div className="flex justify-between items-center gap-2">
+                  <span className="text-darkBlack700 font-bold text-sm">
+                    Key Performance Indicators
+                  </span>
+                </div>
+
+                <Accordion type="single" collapsible>
+                  {pageInfo.Key_Performance_Indicators.map((item, idx) => (
+                    <AccordionItem value={`item-${idx}`} key={idx}>
+                      <AccordionTrigger className="text-sm text-darkBlack700">
+                        {item.kpi_type}
+                      </AccordionTrigger>
+
+                      <AccordionContent asChild>
+                        {item.data?.map((inKpi, idx) => (
+                          <div key={idx} className="flex flex-col gap-2">
+                            <span className="text-sm font-semibold text-darkBlack700">
+                              {inKpi.KPI}
+                            </span>
+                            <Table>
+                              <TableHeader>
+                                <TableRow className="text-sm text-darkBlack700 font-medium">
+                                  {Object.keys(inKpi.Targets ?? {}).map(
+                                    (key, idx) => (
+                                      <TableHead
+                                        key={idx}
+                                        className="w-[100px]"
+                                      >
+                                        {key}
+                                      </TableHead>
+                                    )
+                                  )}
+                                </TableRow>
+                              </TableHeader>
+                              <TableBody>
+                                <TableRow className="border border-gray-200 px-4 py-2 text-darkBlack600 font-normal text-sm">
+                                  {Object.values(inKpi.Targets ?? {}).map(
+                                    (value, idx) => (
+                                      <TableCell key={idx}>{value}</TableCell>
+                                    )
+                                  )}
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </div>
+                        ))}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </Wrapper>
+            )}
+
             {pageInfo?.Risks_and_Mitigations && (
               <Wrapper
-                className={cn(imageByteString ? "col-span-2" : "col-span-1")}
+                className={cn(
+                  "max-h-[200px] overflow-y-auto",
+                  imageByteString ? "col-span-2" : "col-span-1"
+                )}
               >
                 <div className="flex justify-between items-center gap-2">
                   <span className="text-darkBlack700 font-bold text-sm">
@@ -268,23 +396,27 @@ const PageInfo: FC<PageInfoProps> = ({
                     </TableRow>
                   </TableHeader>
                   <TableBody>
-                    {pageInfo?.Risks_and_Mitigations?.map((item, idx) => (
-                      <TableRow
-                        key={idx}
-                        className="text-sm text-darkBlack700 font-medium"
-                      >
-                        <TableCell>{idx + 1}.</TableCell>
-                        <TableCell>{item.Risk}</TableCell>
-                        <TableCell>
-                          <div
-                            style={{
-                              background: `${levels[item["Impact Level"]]}`,
-                            }}
-                            className="rounded-full w-3 h-3"
-                          />
-                        </TableCell>
-                      </TableRow>
-                    ))}
+                    {pageInfo?.Risks_and_Mitigations.map((item, idx) => {
+                      const impactLevel = item["Impact level"] || "default"; // Provide a default value
+
+                      return (
+                        <TableRow
+                          key={idx}
+                          className="text-sm text-darkBlack700 font-medium"
+                        >
+                          <TableCell>{idx + 1}.</TableCell>
+                          <TableCell>{item.Risk}</TableCell>
+                          <TableCell>
+                            <div
+                              style={{
+                                background: `${levels[impactLevel]}`,
+                              }}
+                              className="rounded-full w-3 h-3"
+                            />
+                          </TableCell>
+                        </TableRow>
+                      );
+                    })}
                   </TableBody>
                 </Table>
               </Wrapper>

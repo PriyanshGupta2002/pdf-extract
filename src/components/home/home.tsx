@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Header from "./header";
 import ListingTable from "./lsiting-table";
 import axios from "axios";
-import { PDF_LISTING } from "@/constants";
+import { PDF_LISTING } from "@/lib/constants";
 
 export interface tableDataProps {
   _id: string;

@@ -1,7 +1,7 @@
 "use client";
 import { cn } from "@/lib/utils";
 import { X } from "lucide-react";
-import React, { FC } from "react";
+import React, { FC, useMemo } from "react";
 
 interface ImageRenderProps {
   byteString: string;
@@ -14,24 +14,26 @@ const ImageRenderer: FC<ImageRenderProps> = ({
   setByteString,
 }) => {
   // Convert the byte string to a Base64 encoded string
-  const base64String = `data:image/jpeg;base64,${byteString}`;
+  const base64String = useMemo(() => {
+    return `data:image/jpeg;base64,${byteString}`;
+  }, [byteString]);
 
   return (
     <div
       className={cn(
-        "transition-all duration-300 max-h-36 sticky top-11  ease-linear",
-        byteString ? "w-[1200px]" : "w-0"
+        "transition-all duration-300 h-[900px] overflow-x-auto sticky top-20  ease-linear",
+        byteString ? "w-[900px]" : "w-0"
       )}
     >
       <X
-        className="ml-auto w-5 h-5 cursor-pointer text-rose-500"
+        className="ml-auto fixed z-20 w-5 h-5 cursor-pointer  text-rose-500"
         onClick={() => setByteString("")}
       />
-      <div className="w-full h-full sticky top-0">
+      <div className="w-[1000px] mt-9 overflow-x-auto h-full sticky top-0">
         <img
           src={base64String}
           alt={altText || "Rendered Image"}
-          className="object-cover w-full "
+          className="object-cover w-full"
         />
       </div>
     </div>

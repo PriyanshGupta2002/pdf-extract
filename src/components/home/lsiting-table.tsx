@@ -10,7 +10,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import axios from "axios";
-import { GET_PDF_STATUS } from "@/constants";
+import { GET_PDF_STATUS } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import TableSkeletonLoader from "../table-skeleton";
 import { useRouter } from "next/navigation";
@@ -35,6 +35,8 @@ const ListingTable: FC<listingTableProps> = ({
   const [currentIdx, setCurrentIdx] = useState(0);
   const router = useRouter();
 
+  console.log(statuses);
+
   useEffect(() => {
     setIsLoading(true);
     const lowerLimit = (currentPage - 1) * limit;
@@ -48,17 +50,27 @@ const ListingTable: FC<listingTableProps> = ({
     if (currentPage) {
       const fetchStatuses = async () => {
         const statusPromises = paginatedData.map((item) =>
-          axios.get(`${GET_PDF_STATUS}/${item._id}`).then((response) => ({
-            id: item._id,
-            status: response.data.Status,
-          }))
+          axios
+            .get(`${GET_PDF_STATUS}/${item._id}`)
+            .then((response) => ({
+              id: item._id,
+              status: response.data.Status,
+            }))
+            .catch((error) => ({
+              id: item._id,
+              status: "Failed",
+            }))
         );
 
         try {
-          const statusResults = await Promise.all(statusPromises);
+          const statusResults = await Promise.allSettled(statusPromises);
           const newStatuses: { [key: string]: string } = {};
-          statusResults.forEach(({ id, status }) => {
-            newStatuses[id] = status;
+          statusResults.forEach((result) => {
+            if (result.status === "fulfilled") {
+              newStatuses[result.value.id] = result.value.status;
+            } else {
+              newStatuses[result.reason.id] = "Cannot get status";
+            }
           });
           setStatuses(newStatuses);
         } catch (error) {
@@ -81,9 +93,7 @@ const ListingTable: FC<listingTableProps> = ({
         return toast({
           title: "Pdf is processing...",
         });
-        console.log("hii");
       }
-      console.log("hii");
 
       router.push(`/process/${id}`);
     },

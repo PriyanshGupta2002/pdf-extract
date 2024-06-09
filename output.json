@@ -24,6 +24,24 @@
   "Status": "In Progress",
 
   "List_of_Sub_Initiatives": ["Not Found"],
+  "Initiative_Details": [
+    {
+      "External Stakeholder": "Healthcare Providers",
+      "Required support to implement the program": "Provide proposals for the CoE, Collaborate in designing the referral pathways"
+    },
+    {
+      "External Stakeholder": "Healthcare payors",
+      "Required support to implement the program": "Develop and finalize reimbursement model"
+    },
+    {
+      "External Stakeholder": "Assessors",
+      "Required support to implement the program": "Evaluate the potential CoE"
+    },
+    {
+      "External Stakeholder": "Health Affairs (ADEO)",
+      "Required support to implement the program": "Agree on assessment results and service level agreements"
+    }
+  ],
   "Interdependencies": [
     {
       "External entity": "External Providers (SEHA, NMC, etc.)",
@@ -52,48 +70,17 @@
       "Impact Level": "Medium"
     }
   ],
+
   "Key_Performance_Indicators": [
     {
       "kpi_type": "Main KPI",
       "data": [
         {
-          "KPI": "Early detection of common cancers – Breast",
+          "KPI": "% complex cases treated in CoEs",
           "Targets": {
-            "2024": "80.5%",
-            "2025": "83%",
-            "2026": "85.5%"
-          }
-        },
-        {
-          "KPI": "Early detection of common cancers – Colorectal",
-          "Targets": {
-            "2024": "44.5%",
-            "2025": "47%",
-            "2026": "49.5%"
-          }
-        },
-        {
-          "KPI": "Early detection of common cancers – Cervical",
-          "Targets": {
-            "2024": "68.5%",
-            "2025": "71%",
-            "2026": "73.5%"
-          }
-        },
-        {
-          "KPI": "Prevalence of adult obesity",
-          "Targets": {
-            "2024": "23.4%",
-            "2025": "21.4%",
-            "2026": "19.4%"
-          }
-        },
-        {
-          "KPI": "Prevalence of childhood obesity",
-          "Targets": {
-            "2024": "17.80%",
-            "2025": "16.8%",
-            "2026": "15.80%"
+            "2024": "76%",
+            "2025": "82%",
+            "2026": "88%"
           }
         }
       ]
@@ -102,11 +89,27 @@
       "kpi_type": "Support KPI",
       "data": [
         {
-          "KPI": "% Establish screening coverage",
+          "KPI": "% of IEC applicants treated in Centers of Excellence",
           "Targets": {
-            "2024": "7%",
-            "2025": "7%",
-            "2026": "7%"
+            "2024": "55%",
+            "2025": "60%",
+            "2026": "65%"
+          }
+        },
+        {
+          "KPI": "Number of designated CoE",
+          "Targets": {
+            "2024": "8",
+            "2025": "NA",
+            "2026": "NA"
+          }
+        },
+        {
+          "KPI": "Quality Index score of CoE",
+          "Targets": {
+            "2024": "80%",
+            "2025": "85%",
+            "2026": "90%"
           }
         }
       ]

@@ -2,7 +2,7 @@
 import ImageRenderer from "@/components/process/image-render";
 import LeftPageBar from "@/components/process/left-page-bar";
 import PageInfo from "@/components/process/page-info";
-import { GET_PDF_PAGES, START_PDF_EXTRACTION } from "@/constants";
+import { GET_PDF_PAGES, START_PDF_EXTRACTION } from "@/lib/constants";
 import axios from "axios";
 import { useParams, useSearchParams } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
