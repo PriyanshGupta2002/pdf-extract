@@ -79,7 +79,9 @@ const ListingTable: FC<listingTableProps> = ({
       };
 
       if (paginatedData.length > 0) {
-        fetchStatuses();
+        setTimeout(() => {
+          fetchStatuses();
+        }, 3000);
       }
     }
   }, [currentPage, paginatedData]);

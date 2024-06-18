@@ -15,22 +15,21 @@ interface Owner {
 }
 
 interface Interdependency {
-  "External Stakeholder"?: string;
-  "Required support to implement the program"?: string;
-  "Required support to implement the initiative"?: string;
-  "External Entity"?: string;
+  [key: string]: string;
 }
 
 interface RiskAndMitigation {
   Risk?: string;
+  Risks?: string;
   "Impact level"?: "High" | "Medium" | "Low";
+  "Impact Level"?: "High" | "Medium" | "Low";
 }
 
 // interface KPITargets {
 //   [year: string]: string;
 // }
 
-interface KPIData {
+export interface KPIData {
   KPI?: string;
   Targets?: Record<string, string>;
 }
@@ -41,8 +40,7 @@ interface KPI {
 }
 
 interface Initiative {
-  "Program description": string;
-  Deliverables: string[];
+  [key: string]: string | string[];
 }
 
 export interface Project {
@@ -65,4 +63,5 @@ export interface Project {
   DB_Id?: string;
   Skip?: boolean;
   Extracted?: string;
+  Summary?: string;
 }

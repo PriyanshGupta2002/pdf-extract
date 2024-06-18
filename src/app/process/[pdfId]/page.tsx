@@ -62,6 +62,7 @@ const Process = () => {
           isPageBarOpen={isLeftBarOpen}
           imageByteString={imageByteString}
           setImageByteString={setImageByteString}
+          firstPageId={pdfPages[0]?._id || ""}
         />
         {imageByteString && (
           <ImageRenderer

@@ -21,7 +21,7 @@ const ImageRenderer: FC<ImageRenderProps> = ({
   return (
     <div
       className={cn(
-        "transition-all duration-300 h-[900px] overflow-x-auto sticky top-20  ease-linear",
+        "transition-all duration-300 h-[500px] overflow-x-auto sticky top-20  ease-linear",
         byteString ? "w-[900px]" : "w-0"
       )}
     >

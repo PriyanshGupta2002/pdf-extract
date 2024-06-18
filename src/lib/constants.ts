@@ -6,3 +6,4 @@ export const GET_PDF_STATUS = `${BASE_URL}/process/check`;
 export const START_PDF_EXTRACTION = `${BASE_URL}/extract`;
 export const GET_PDF_PAGES = `${BASE_URL}/records/pageinfo`;
 export const GET_PAGE_INFO = `${BASE_URL}/records/pagedata`;
+export const UPDATE_PAGE = `${BASE_URL}/CRUD`;
