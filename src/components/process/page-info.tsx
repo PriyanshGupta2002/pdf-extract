@@ -290,68 +290,6 @@ const PageInfo: FC<PageInfoProps> = ({
     });
   };
 
-  // const updateKPI = (
-  //   kpiIndex: number,
-  //   dataIdx: number,
-  //   key: string,
-  //   subKey: string,
-  //   value: string,
-  //   type?: "kpi_type" | "KPI"
-  // ) => {
-  //   setPageInfo((prev) => {
-  //     if (!prev) return prev;
-
-  //     const updatedKPIs = prev?.Key_Performance_Indicators?.map(
-  //       (kpi, index) => {
-  //         if (index === kpiIndex) {
-  //           if (type === "kpi_type") {
-  //             return {
-  //               ...kpi,
-  //               kpi_type: value,
-  //             };
-  //           } else if (type === "KPI") {
-  //             const updatedData = kpi?.data?.map((item, dataIndex) => {
-  //               if (dataIndex === dataIdx) {
-  //                 return {
-  //                   ...item,
-  //                   KPI: value,
-  //                 };
-  //               }
-  //               return item;
-  //             });
-  //             return {
-  //               ...kpi,
-  //               data: updatedData,
-  //             };
-  //           } else {
-  //             const updatedData = kpi?.data?.map((item, dataIndex) => {
-  //               if (dataIndex === dataIdx) {
-  //                 return {
-  //                   ...item,
-  //                   [key]: {
-  //                     ...item[key],
-  //                     [subKey]: value,
-  //                   },
-  //                 };
-  //               }
-  //               return item;
-  //             });
-  //             return {
-  //               ...kpi,
-  //               data: updatedData,
-  //             };
-  //           }
-  //         }
-  //         return kpi;
-  //       }
-  //     );
-
-  //     return {
-  //       ...prev,
-  //       Key_Performance_Indicators: updatedKPIs,
-  //     };
-  //   });
-  // };
   const updateRisk = (
     idx: number,
     field: "Risk" | "Risks" | "Impact Level" | "Impact level",
@@ -625,9 +563,10 @@ const PageInfo: FC<PageInfoProps> = ({
         const payload = {
           DB_Id: pageId,
           deletions: {
-            Risks_and_Mitigations: {
-              index: [idx],
-            },
+            Risks_and_Mitigations: [idx],
+            // Risks_and_Mitigations: {
+            //   index: [idx],
+            // },
           },
         };
         await axios.post(UPDATE_PAGE, {
@@ -1129,7 +1068,7 @@ const PageInfo: FC<PageInfoProps> = ({
                 </div>
 
                 <Accordion type="single" collapsible>
-                  {pageInfo.Key_Performance_Indicators.map((item, idx) => (
+                  {pageInfo?.Key_Performance_Indicators?.map((item, idx) => (
                     <AccordionItem value={`item-${idx}`} key={idx}>
                       <AccordionTrigger className="text-sm text-darkBlack700">
                         {item.kpi_type}
@@ -1366,5 +1305,4 @@ const PageInfo: FC<PageInfoProps> = ({
     </div>
   );
 };
-
 export default PageInfo;

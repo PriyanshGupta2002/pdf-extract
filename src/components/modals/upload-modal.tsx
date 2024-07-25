@@ -13,7 +13,7 @@ import { File as FileIcon, Flag, Loader, X } from "lucide-react";
 import { Button } from "../ui/button";
 import Image from "next/image";
 import axios from "axios";
-import { BASE_URL, FILE_UPLOAD_API, PDF_PROCESSING_API } from "@/lib/constants";
+import { FILE_UPLOAD_API, PDF_PROCESSING_API } from "@/lib/constants";
 import { useToast } from "../ui/use-toast";
 
 interface UploadModalProps {
